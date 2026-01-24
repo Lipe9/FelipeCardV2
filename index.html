@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lipe - Portfólio</title>
   <link rel="shortcut icon" href="img/lipe-logo.png" type="image/x-icon">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -21,19 +23,20 @@
           <span></span><span></span><span></span><span></span>
         </div>
         
-        <div class="image-box">
+        <div class="image-box reveal active">
           <img src="img/Felipe (1).gif" alt="Felipe Silva" onerror="this.src='https://via.placeholder.com/150/000000/31bf2a?text=Lipe'"/>
         </div>
-
-        <div class="content">
-          <h2>Felipe Silva</h2>
-          <p class="role">Desenvolvedor</p>
-          
+        <div class="content reveal">
+          <h1>
+            <span class="static-text">Olá, eu sou</span><br>
+            <span id="digitando"></span><span class="cursor">|</span>
+          </h1>
+        </div>
           <div class="tags">
             <span class="tag">Informática Básica</span>
             <span class="tag">Tec. Desenv. Sistemas</span>
             <span class="tag">Ciências da Computação</span>
-            <span class="tag">Jovem Aprendiz Telemarketing</span>
+             <span class="tag">Jovem Aprendiz Telemarketing</span>
           </div>
 
           <button class="btn-primary" onclick="goToScreen('menu')">
@@ -44,7 +47,9 @@
 
       <section id="screen-menu" class="card-screen">
         <div class="header-nav">
-          <button class="btn-icon" onclick="goToScreen('home')"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="btn-icon" onclick="goToScreen('home')">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
           <h3>Perfil & Skills</h3>
         </div>
 
@@ -80,7 +85,9 @@
 
       <section id="screen-projects" class="card-screen">
         <div class="header-nav">
-          <button class="btn-icon" onclick="goToScreen('menu')"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="btn-icon" onclick="goToScreen('menu')">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
           <h3>Meus Projetos</h3>
         </div>
 
@@ -109,23 +116,24 @@
               <h4>Delicious Burger</h4>
               <p>E-Commerce de Lanchonete - 2025</p>
             </div>
-              <a href="https://deliciiousburger.netlify.app/" target="_blank" class="btn-link">V1</a>
+            <a href="https://deliciiousburger.netlify.app/" target="_blank" class="btn-link">V1</a>
           </div>
 
           <div class="project-item">
             <div class="project-info">
               <h4>Jogos de Matemática</h4>
-              <p>Jogos interativos de matemática - 2025</p>
+              <p>Jogos interativos - 2025</p>
             </div>
-              <a href="https://jogosmatematicos9.netlify.app/" target="_blank" class="btn-link">V1</a>
+            <a href="https://jogosmatematicos9.netlify.app/" target="_blank" class="btn-link">V1</a>
           </div>
-          
-          </div>
+        </div>
       </section>
 
       <section id="screen-courses" class="card-screen">
         <div class="header-nav">
-          <button class="btn-icon" onclick="goToScreen('menu')"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="btn-icon" onclick="goToScreen('menu')">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
           <h3>Cursos & Credenciais</h3>
         </div>
 
@@ -150,13 +158,6 @@
             <li>
               <div class="course-header">
                 <strong>HTML5 App Development</strong>
-                <span class="provider">IFRS</span>
-              </div>
-              <a href="#" target="_blank" class="cred-link">Ver Credencial</a>
-            </li>
-             <li>
-              <div class="course-header">
-                <strong>CSS3: Estilizando Páginas</strong>
                 <span class="provider">IFRS</span>
               </div>
               <a href="#" target="_blank" class="cred-link">Ver Credencial</a>
