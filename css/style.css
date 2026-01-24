@@ -27,42 +27,29 @@ body {
 /* Container Principal */
 .container {
   width: 100%;
-  height: 90vh;
-  position: relative;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 /* O Card em si */
 .card-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 90%;
-  height: 80vh;
+  width: 90%;
+  max-width: 380px;
+  height: 600px;
   background: black;
   border-radius: 5px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  
   box-shadow: 0 0 30px rgba(0,0,0,0.8);
   overflow: hidden;
   transition: height 0.3s ease;
 }
 
-/* Efeito de Luz atrás do card */
-.glow-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
-  filter: blur(100px);
-  opacity: 0.3;
-  z-index: -1;
-  animation: pulse 4s infinite alternate;
-}
+
 
 @keyframes pulse {
   0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
@@ -76,7 +63,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 30px 0px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -234,6 +221,12 @@ body {
   font-size: 1.8rem;
   transition: 0.3s;
 }
+
+.social-medias a:hover {
+  color: var(--neon-green);
+  transform: translateY(-5px);
+}
+
 .skills-container {
   width: 100%;
   text-align: center;
@@ -260,43 +253,11 @@ body {
   color: var(--white);
   transition: 0.3s;
 }
-.social-medias a:hover .fa-github {
-  color: #ffffff;
-}
-.social-medias a:hover .fa-linkedin {
-  color: #0077b5;
-}
-.social-medias a:hover .fa-instagram {
-  color: #e1306c;
-}
-.social-medias a:hover .fa-tiktok {
-  color: #ff0050;
+.skill-grid i:hover {
+  color: var(--neon-green);
+  transform: scale(1.2);
 }
 
-.skill-grid i.fa-python:hover {
-  color: #4B8BBE;
-}
-.skill-grid i.fa-html5:hover {
-  color: #E34F26;
-}
-.skill-grid i.fa-css3-alt:hover {
-  color: #2965f1;
-}
-.skill-grid i.fa-js:hover {
-  color: #F7DF1E;
-}
-.skill-grid i.fa-java:hover {
-  color: #f89820;
-}
-.skill-grid i.fa-c:hover {
-  color: #5E97D0;
-}
-.skill-grid i.fa-database:hover {
-  color: #00758F;
-}
-.skill-grid i.fa-flutter:hover {
-  color: #47C5FB;
-}
 .menu-actions {
   width: 100%;
   display: flex;
@@ -411,11 +372,6 @@ body {
 .cred-link:hover { border-bottom: 1px solid var(--neon-green); }
 
 /* --- RESPONSIVIDADE (Mobile) --- */
-@media (max-width: 768px) {
-  .card-wrapper{
-    height: 45vh;
-  }
-}
 @media (max-width: 400px) {
   .card-wrapper {
     height: 100%;
@@ -424,6 +380,7 @@ body {
     width: 100%;
     border: none;
   }
+  
   .image-box {
     margin-top: 20px;
     width: 120px;
@@ -435,38 +392,28 @@ body {
   .skill-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .skill-grid i { font-size: 1.8rem; }
 }
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: 0.8s ease-out;
+
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition: .8s;
 }
-.reveal.active {
-  opacity: 1 !important;
-  transform: translateY(0);
+.reveal.active{
+  opacity:1;
+  transform:none;
+}
+.cursor{
+  animation:blink 1s infinite;
+  color:#3fa66a;
 }
 .content h1 {
   text-align: center;
   min-height: 100px;
   color: var(--white);
   line-height: 1.2;
+  font-size: 1.6rem;
+
 }
-.reveal.active {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  visibility: visible !important;
-}
-.static-text {
-  font-size: 1.7rem;
-  font-weight: 600;
-}
-#digitando {
-  color: var(--neon-green);
-}
-.cursor {
-  animation: blink 1s infinite;
-  color: #3fa66a;
-  font-weight: 200;
-}
-@keyframes blink {
-  50% { opacity: 0; }
+@keyframes blink{
+  50%{opacity:0}
 }
