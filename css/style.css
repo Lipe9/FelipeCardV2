@@ -412,15 +412,19 @@ body {
 .cred-link:hover { border-bottom: 1px solid var(--neon-green); }
 
 /* --- RESPONSIVIDADE (Mobile) --- */
+@media (max-width: 768px) {
+  .card-wrapper{
+    height: 45vh;
+  }
+}
 @media (max-width: 400px) {
   .card-wrapper {
     height: 100%;
-    max-height: 100vh;
+    max-height: 50vh;
     border-radius: 0;
     width: 100%;
     border: none;
   }
-  
   .image-box {
     margin-top: 20px;
     width: 120px;
