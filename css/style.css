@@ -413,7 +413,7 @@ body {
 /* --- RESPONSIVIDADE (Mobile) --- */
 @media (max-width: 768px) {
   .card-wrapper{
-    height: 90vh;
+    height: 45vh;
   }
 }
 @media (max-width: 400px) {
