@@ -18,7 +18,7 @@ function goToScreen(screenId) {
   }
 }
 
-const textos = ["Luna Lobo","Frontend Developer"];
+const textos = ["Felipe Silva","Frontend Developer"];
 const el = document.getElementById("digitando");
 
 let i=0,j=0,apagando=false;
