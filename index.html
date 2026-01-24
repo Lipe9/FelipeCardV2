@@ -1,221 +1,235 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lipe - Portfólio</title>
-  <link rel="shortcut icon" href="img/lipe-logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lipe - Portfólio</title>
+    <link rel="shortcut icon" href="img/lipe-logo.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap"
+      rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="card-wrapper">
+        <div class="glow-bg"></div>
 
-  <main class="container">
-    <div class="card-wrapper">
-      
-      <div class="glow-bg"></div>
-
-      <section id="screen-home" class="card-screen active">
-        <div class="border-anim">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        
-        <div class="image-box">
-          <img src="img/perfil.jpg" alt="Felipe Silva" onerror="this.src = 'https://via.placeholder.com/150/000000/31bf2a?text=Lipe'" />
-        </div>
-
-        <div class="content">
-          <h1>
-            Olá, eu sou<br>
-            <span id="digitando"></span><span class="cursor">|</span>
-            <p class="role">Desenvolvedor.</p>
-          </h1>
-          
-          <div class="tags">
-            <span class="tag">Informática Básica</span>
-            <span class="tag">Tec. Desenv. Sistemas</span>
-            <span class="tag">Bel. Ciências da Computação</span>
-            <span class="tag">Jovem Aprendiz Telemarketing</span>
+        <section id="screen-home" class="card-screen active">
+          <div class="border-anim">
+            <span></span><span></span><span></span><span></span>
           </div>
 
-          <button class="btn-primary" onclick="goToScreen('menu')">
-            Saiba Mais <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
-      </section>
-
-      <section id="screen-menu" class="card-screen">
-        <div class="header-nav">
-          <button class="btn-icon" onclick="goToScreen('home')"><i class="fa-solid fa-arrow-left"></i></button>
-          <h3>Perfil & Skills</h3>
-        </div>
-
-        <div class="social-medias">
-          <a href="https://github.com/Lipe9" target="_blank"><i class="fa-brands fa-github"></i></a>
-          <a href="https://www.linkedin.com/in/fellipe125-/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-          <a href="https://www.instagram.com/felipezy_9/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-
-        <div class="skills-container">
-          <h4>Tecnologias</h4>
-          <div class="skill-grid">
-            <i class="fa-brands fa-python" title="Python"></i>
-            <i class="fa-brands fa-html5" title="HTML5"></i>
-            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-            <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-brands fa-java" title="Java"></i>
-            <i class="fa-solid fa-c" title="C/C++"></i>
-            <i class="fa-solid fa-database" title="MySQL"></i>
-            <i class="fa-brands fa-flutter" title="Flutter"></i>
+          <div class="image-box">
+            <img
+              src="img/perfil.jpg"
+              alt="Felipe Silva">
           </div>
-        </div>
 
-        <div class="menu-actions">
-          <button class="btn-secondary" onclick="goToScreen('projects')">
-            <i class="fa-solid fa-rocket"></i> Ver Projetos
-          </button>
-          <button class="btn-secondary" onclick="goToScreen('courses')">
-            <i class="fa-solid fa-graduation-cap"></i> Certificados
-          </button>
-        </div>
-      </section>
+          <div class="content">
+            <h1>
+              Olá, eu sou<br />
+              <span id="digitando"></span><span class="cursor">|</span>
+              <p class="role">Desenvolvedor Web.</p>
+            </h1>
 
-            <section id="screen-projects" class="card-screen">
-
-        <div class="header-nav">
-
-          <button class="btn-icon" onclick="goToScreen('menu')">
-
-            <i class="fa-solid fa-arrow-left"></i>
-
-          </button>
-
-          <h3>Meus Projetos</h3>
-
-        </div>
-
-
-
-        <div class="scroll-content">
-
-          <div class="project-item">
-
-            <div class="project-info">
-
-              <h4>CandyDreams</h4>
-
-              <p>E-Commerce de Doces - 2024</p>
-
+            <div class="tags">
+              <span class="tag">Informática Básica</span>
+              <span class="tag">Tec. Desenv. Sistemas</span>
+              <span class="tag">Bel. Ciências da Computação</span>
+              <span class="tag">Jovem Aprendiz Telemarketing</span>
             </div>
 
-            <a href="https://candydreams.netlify.app/" target="_blank" class="btn-link">V1</a>
+            <button class="btn-primary" onclick="goToScreen('menu')">
+              Saiba Mais <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </section>
 
+        <section id="screen-menu" class="card-screen">
+          <div class="header-nav">
+            <button class="btn-icon" onclick="goToScreen('home')">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h3>Perfil & Skills</h3>
           </div>
 
-
-
-          <div class="project-item">
-
-            <div class="project-info">
-
-              <h4>MedClinic</h4>
-
-              <p>Sistema de Agendamento - 2024</p>
-
-            </div>
-
-            <div class="multi-links">
-
-              <a href="https://medclinicds.vercel.app/" target="_blank" class="btn-link">V1</a>
-
-              <a href="https://dsmedclinic.netlify.app/" target="_blank" class="btn-link">V2</a>
-
-            </div>
-
+          <div class="social-medias">
+            <a href="https://github.com/Lipe9" target="_blank"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="https://www.linkedin.com/in/fellipe125-/" target="_blank"
+              ><i class="fa-brands fa-linkedin"></i
+            ></a>
+            <a href="https://www.instagram.com/felipezy_9/" target="_blank"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
           </div>
 
-
-
-          <div class="project-item">
-
-            <div class="project-info">
-
-              <h4>Delicious Burger</h4>
-
-              <p>E-Commerce de Lanchonete - 2025</p>
-
+          <div class="skills-container">
+            <h4>Tecnologias</h4>
+            <div class="skill-grid">
+              <i class="fa-brands fa-python" title="Python"></i>
+              <i class="fa-brands fa-html5" title="HTML5"></i>
+              <i class="fa-brands fa-css3-alt" title="CSS3"></i>
+              <i class="fa-brands fa-js" title="JavaScript"></i>
+              <i class="fa-brands fa-java" title="Java"></i>
+              <i class="fa-solid fa-c" title="C/C++"></i>
+              <i class="fa-solid fa-database" title="MySQL"></i>
+              <i class="fa-brands fa-flutter" title="Flutter"></i>
             </div>
-
-            <a href="https://deliciiousburger.netlify.app/" target="_blank" class="btn-link">V1</a>
-
           </div>
 
+          <div class="menu-actions">
+            <button class="btn-secondary" onclick="goToScreen('projects')">
+              <i class="fa-solid fa-rocket"></i> Ver Projetos
+            </button>
+            <button class="btn-secondary" onclick="goToScreen('courses')">
+              <i class="fa-solid fa-graduation-cap"></i> Certificados
+            </button>
+          </div>
+        </section>
 
+        <section id="screen-projects" class="card-screen">
+          <div class="header-nav">
+            <button class="btn-icon" onclick="goToScreen('menu')">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
 
-          <div class="project-item">
-
-            <div class="project-info">
-
-              <h4>Jogos de Matemática</h4>
-
-              <p>Jogos interativos - 2025</p>
-
-            </div>
-
-            <a href="https://jogosmatematicos9.netlify.app/" target="_blank" class="btn-link">V1</a>
-
+            <h3>Meus Projetos</h3>
           </div>
 
-        </div>
+          <div class="scroll-content">
+            <div class="project-item">
+              <div class="project-info">
+                <h4>CandyDreams</h4>
 
-      </section>
-
-      <section id="screen-courses" class="card-screen">
-        <div class="header-nav">
-          <button class="btn-icon" onclick="goToScreen('menu')"><i class="fa-solid fa-arrow-left"></i></button>
-          <h3>Cursos & Credenciais</h3>
-        </div>
-
-        <div class="scroll-content">
-          <ul class="course-list">
-            <li>
-              <div class="course-header">
-                <strong>UX Design Foundations</strong>
-                <span class="provider">Google</span>
+                <p>E-Commerce de Doces - 2024</p>
               </div>
-              <a href="https://www.coursera.org/account/accomplishments/records/AKXWFUV33ZZB" target="_blank" class="cred-link">Ver Credencial</a>
-            </li>
 
-            <li>
-              <div class="course-header">
-                <strong>Tech Support Fundamentals</strong>
-                <span class="provider">Google</span>
+              <a
+                href="https://candydreams.netlify.app/"
+                target="_blank"
+                class="btn-link"
+                >V1</a
+              >
+            </div>
+
+            <div class="project-item">
+              <div class="project-info">
+                <h4>MedClinic</h4>
+
+                <p>Sistema de Agendamento - 2024</p>
               </div>
-              <a href="https://www.coursera.org/account/accomplishments/records/XZ7T5XJAJH8D" target="_blank" class="cred-link">Ver Credencial</a>
-            </li>
 
-            <li>
-              <div class="course-header">
-                <strong>HTML5 App Development</strong>
-                <span class="provider">IFRS</span>
+              <div class="multi-links">
+                <a
+                  href="https://medclinicds.vercel.app/"
+                  target="_blank"
+                  class="btn-link"
+                  >V1</a
+                >
+
+                <a
+                  href="https://dsmedclinic.netlify.app/"
+                  target="_blank"
+                  class="btn-link"
+                  >V2</a
+                >
               </div>
-              <a href="#" target="_blank" class="cred-link">Ver Credencial</a>
-            </li>
-             <li>
-              <div class="course-header">
-                <strong>CSS3: Estilizando Páginas</strong>
-                <span class="provider">IFRS</span>
+            </div>
+
+            <div class="project-item">
+              <div class="project-info">
+                <h4>Delicious Burger</h4>
+
+                <p>E-Commerce de Lanchonete - 2025</p>
               </div>
-              <a href="#" target="_blank" class="cred-link">Ver Credencial</a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-    </div>
-  </main>
+              <a
+                href="https://deliciiousburger.netlify.app/"
+                target="_blank"
+                class="btn-link"
+                >V1</a
+              >
+            </div>
 
-  <script src="js/script.js"></script>
-</body>
+            <div class="project-item">
+              <div class="project-info">
+                <h4>Jogos de Matemática</h4>
+
+                <p>Jogos interativos - 2025</p>
+              </div>
+
+              <a
+                href="https://jogosmatematicos9.netlify.app/"
+                target="_blank"
+                class="btn-link"
+                >V1</a
+              >
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-courses" class="card-screen">
+          <div class="header-nav">
+            <button class="btn-icon" onclick="goToScreen('menu')">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h3>Cursos & Credenciais</h3>
+          </div>
+
+          <div class="scroll-content">
+            <ul class="course-list">
+              <li>
+                <div class="course-header">
+                  <strong>UX Design Foundations</strong>
+                  <span class="provider">Google</span>
+                </div>
+                <a
+                  href="https://www.coursera.org/account/accomplishments/records/AKXWFUV33ZZB"
+                  target="_blank"
+                  class="cred-link"
+                  >Ver Credencial</a
+                >
+              </li>
+
+              <li>
+                <div class="course-header">
+                  <strong>Tech Support Fundamentals</strong>
+                  <span class="provider">Google</span>
+                </div>
+                <a
+                  href="https://www.coursera.org/account/accomplishments/records/XZ7T5XJAJH8D"
+                  target="_blank"
+                  class="cred-link"
+                  >Ver Credencial</a
+                >
+              </li>
+
+              <li>
+                <div class="course-header">
+                  <strong>HTML5 App Development</strong>
+                  <span class="provider">IFRS</span>
+                </div>
+                <a href="#" target="_blank" class="cred-link">Ver Credencial</a>
+              </li>
+              <li>
+                <div class="course-header">
+                  <strong>CSS3: Estilizando Páginas</strong>
+                  <span class="provider">IFRS</span>
+                </div>
+                <a href="#" target="_blank" class="cred-link">Ver Credencial</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
 </html>
