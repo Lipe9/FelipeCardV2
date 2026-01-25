@@ -357,6 +357,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border-left: 3px solid var(--neon-green);
 }
 
 .course-header {
@@ -365,7 +366,7 @@ body {
   align-items: center;
 }
 
-.course-header strong { color: var(--white); font-size: 0.9rem; }
+.course-header strong { color: var(--white); font-size: 1rem; }
 .provider {
   background: var(--neon-green);
   color: #000;
