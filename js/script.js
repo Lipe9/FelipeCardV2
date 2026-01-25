@@ -18,7 +18,8 @@ function goToScreen(screenId) {
   }
 }
 
-const textos = ["Felipe Silva","Frontend Developer", "<LipDev/>"];
+const textos = ["Felipe Silva" ,"Frontend Developer" , "<LipDev/>"];
+
 const el = document.getElementById("digitando");
 
 let i=0,j=0,apagando=false;
