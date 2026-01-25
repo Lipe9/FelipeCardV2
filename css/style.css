@@ -127,16 +127,15 @@ body {
   gap: 8px;
   margin-bottom: 40px;
   font-weight: 400;
-  font-size: 1.2rem;
 }
-
 .tag {
   background: rgba(49, 191, 42, 0.1);
   color: var(--text-main);
   padding: 12px 10px;
   border-radius: 15px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   border: 1px solid rgba(49, 191, 42, 0.3);
+  cursor: pointer;
 }
 
 /* Botões */
