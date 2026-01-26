@@ -138,18 +138,17 @@ body {
   flex-direction: column;
   gap: 8px;
   margin-bottom: 40px;
-  font-weight: 400;
 }
 .tag {
   background: rgba(49, 191, 42, 0.1);
   color: var(--text-main);
   padding: 12px 10px;
   border-radius: 15px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   border: 1px solid rgba(49, 191, 42, 0.3);
   cursor: pointer;
+  font-weight: 510;
 }
-
 /* Botões */
 .btn-primary, .btn-secondary, .btn-link, .cred-link {
   cursor: pointer;

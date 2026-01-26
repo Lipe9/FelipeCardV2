@@ -21,20 +21,39 @@ function goToScreen(screenId) {
 const textos = ["Felipe Silva","Frontend Developer", "<LipDev/>"];
 const el = document.getElementById("digitando");
 
-let i=0,j=0,apagando=false;
-
-function digitar(){
-  el.textContent = textos[i].substring(0,j);
-  if(!apagando){
-    if(j < textos[i].length) j++;
-    else setTimeout(()=>apagando=true,1500);
-  }else{
-    if(j>0) j--;
-    else{
-      apagando=false;
-      i=(i+1)%textos.length;
+let i = 0; // Índice da palavra atual
+let j = 0; // Índice da letra atual
+let apagando = false;
+function digitar() {
+  const palavraAtual = textos[i];
+  // Define o texto na tela
+  el.textContent = palavraAtual.substring(0, j);
+  if (!apagando) {
+    // ESTÁ ESCREVENDO
+    if (j < palavraAtual.length) {
+      j++;
+      setTimeout(digitar, 130); // Velocidade de digitação
+    } else {
+      // Terminou de escrever a palavra, espera antes de apagar
+      apagando = true;
+      setTimeout(digitar, 1500); // Espera 1.5s com o nome na tela
+    }
+  } else {
+    // ESTÁ APAGANDO
+    if (j > 0) {
+      j--;
+      setTimeout(digitar, 100); // Velocidade de apagar (mais rápido)
+    } else {
+      // Terminou de apagar, passa para o próximo nome
+      apagando = false;
+      i++; 
+      // Se chegou no último (3), volta para o primeiro (0)
+      if (i >= textos.length) {
+        i = 0;
+      }
+      setTimeout(digitar, 200); // Pequena pausa antes de começar o próximo
     }
   }
-  setTimeout(digitar,apagando?80:120);
 }
+
 digitar();
