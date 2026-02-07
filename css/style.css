@@ -457,3 +457,128 @@ body {
 @keyframes blink{
   50%{opacity:0}
 }
+
+
+
+/* Container da Timeline */
+.education-timeline {
+  position: relative;
+  width: 100%;
+  max-width: 500px; /* Limite para telas grandes não esticarem demais */
+  margin: 0 auto;
+  padding: 0 15px 0 45px; /* Espaço para a linha e ícone à esquerda */
+  box-sizing: border-box;
+}
+
+/* Ícone Especial no Topo */
+.timeline-top-icon {
+  position: absolute;
+  left: 17px;
+  top: -28px;
+  color: var(--neon-green);
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 8px var(--neon-glow));
+  z-index: 3;
+}
+
+/* A Linha Vertical */
+.education-timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px; /* Alinhado com o centro do ícone de topo */
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--neon-green), #1a4a1a, #00d4ff);
+  opacity: 0.4;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+/* Ícones de Nodo (Círculos) */
+.timeline-icon {
+  position: absolute;
+  left: -28px;
+  top: 37%; /* Centraliza na linha */
+  min-width: 22px;
+  height: 22px;
+  background: #050505;
+  border: 2px solid var(--neon-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  font-size: 0.65rem;
+  color: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-glow);
+}
+
+/* Cards Padronizados e Responsivos */
+.timeline-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+
+.timeline-content h4 {
+  font-size: clamp(0.85rem, 2vw, 1rem); /* Fonte fluida */
+  color: #fff;
+  line-height: 1.3;
+}
+
+.timeline-year {
+  font-size: 0.75rem;
+  color: var(--neon-green);
+  font-weight: bold;
+  margin: 5px 0;
+  font-family: monospace;
+}
+
+.timeline-content p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 350px) {
+  .timeline-top-icon { left: 12px; }
+  .education-timeline::before { left: 23px; }
+  .timeline-icon { left: -22px; min-width: 18px; height: 18px; }
+}
+
+/* Tablets e Desktops (Ajuste de largura do container) */
+@media (min-width: 768px) {
+  .education-timeline {
+    max-width: 60%;
+  }
+}
+
+/* Ajuste de Pulsos */
+.pulse-green { animation: pulse-green-glow 2s infinite; }
+.pulse-blue { border-color: #00d4ff; color: #00d4ff; animation: pulse-blue-glow 2s infinite; }
+
+@keyframes pulse-green-glow {
+  0% { box-shadow: 0 0 0 0 rgba(49, 191, 42, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(49, 191, 42, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(49, 191, 42, 0); }
+}
+
+@keyframes pulse-blue-glow {
+  0% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(0, 212, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+}
