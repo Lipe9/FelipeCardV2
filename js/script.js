@@ -43,7 +43,11 @@ class CyberAudioEngine {
     if (!this.muted) {
       this.playBeep(880, 'sine', 0.1, 0.08);
       showToast('Áudio Cyberdeck Ativado!', 'fa-volume-high');
+      if (typeof window.checkSnakeAudioResume === 'function') {
+        window.checkSnakeAudioResume();
+      }
     } else {
+      this.stopArcadeMusic();
       showToast('Áudio Desativado', 'fa-volume-xmark');
     }
   }
@@ -117,6 +121,113 @@ class CyberAudioEngine {
     if (this.muted) return;
     this.playBeep(523.25, 'triangle', 0.1, 0.04);
     setTimeout(() => this.playBeep(659.25, 'triangle', 0.15, 0.04), 80);
+  }
+
+  startArcadeMusic() {
+    if (this.muted) return;
+    if (this.arcadeMusicInterval) return;
+    try {
+      this.initContext();
+      if (!this.ctx) return;
+
+      // 16-step retro 8-bit cyber arcade bassline & synth melody
+      const notes = [
+        130.81, 261.63, 196.00, 311.13,
+        130.81, 261.63, 196.00, 392.00,
+        116.54, 233.08, 174.61, 293.66,
+        103.83, 207.65, 155.56, 261.63
+      ];
+      let step = 0;
+      this.arcadeMusicRunning = true;
+
+      this.arcadeMusicInterval = setInterval(() => {
+        if (this.muted || !this.arcadeMusicRunning) {
+          this.stopArcadeMusic();
+          return;
+        }
+        try {
+          if (!this.ctx || this.ctx.state !== 'running') return;
+          const now = this.ctx.currentTime;
+          const freq = notes[step % notes.length];
+          step++;
+
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = (step % 2 === 0) ? 'triangle' : 'square';
+          osc.frequency.setValueAtTime(freq, now);
+
+          const vol = 0.024;
+          gain.gain.setValueAtTime(vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 0.12);
+        } catch (e) {}
+      }, 135);
+    } catch (e) {
+      console.warn('Arcade audio error', e);
+    }
+  }
+
+  stopArcadeMusic() {
+    this.arcadeMusicRunning = false;
+    if (this.arcadeMusicInterval) {
+      clearInterval(this.arcadeMusicInterval);
+      this.arcadeMusicInterval = null;
+    }
+  }
+
+  playEatFood() {
+    if (this.muted) return;
+    try {
+      this.initContext();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(587.33, now);
+      osc.frequency.exponentialRampToValueAtTime(880.00, now + 0.06);
+      osc.frequency.exponentialRampToValueAtTime(1174.66, now + 0.12);
+
+      gain.gain.setValueAtTime(0.045, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } catch (e) {}
+  }
+
+  playGameOver() {
+    if (this.muted) return;
+    try {
+      this.initContext();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(340, now);
+      osc.frequency.linearRampToValueAtTime(110, now + 0.32);
+
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.32);
+    } catch (e) {}
   }
 }
 
@@ -283,6 +394,14 @@ function goToScreen(screenId) {
       btn.classList.remove('active');
     }
   });
+
+  if (screenId === 'snake') {
+    if (typeof window.checkSnakeAudioResume === 'function') {
+      window.checkSnakeAudioResume();
+    }
+  } else {
+    soundEngine.stopArcadeMusic();
+  }
 
   soundEngine.playSwitch();
 }
@@ -561,7 +680,7 @@ function initSnakeGame() {
     if (head.x === food.x && head.y === food.y) {
       score += 10;
       if (scoreEl) scoreEl.textContent = score.toString();
-      soundEngine.playSuccess();
+      soundEngine.playEatFood();
 
       // New high score check
       if (score > highScore) {
@@ -597,6 +716,7 @@ function initSnakeGame() {
       btnAction.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Reiniciar';
     }
     soundEngine.playSwitch();
+    soundEngine.startArcadeMusic();
     draw();
     gameInterval = setInterval(step, currentSpeed);
   }
@@ -604,7 +724,8 @@ function initSnakeGame() {
   function gameOver() {
     isRunning = false;
     clearInterval(gameInterval);
-    soundEngine.playBeep(180, 'sawtooth', 0.25, 0.08);
+    soundEngine.stopArcadeMusic();
+    soundEngine.playGameOver();
 
     if (overlayTitle) {
       overlayTitle.textContent = 'GAME OVER';
@@ -774,6 +895,16 @@ function initSnakeGame() {
   // Initial draw of starting board
   resetGame();
   draw();
+
+  // Audio Hook: chamado quando o som do site é ativado/desativado pelo botão HUD
+  window.checkSnakeAudioResume = () => {
+    const snakeScreen = document.getElementById('screen-snake');
+    if (snakeScreen && snakeScreen.classList.contains('active')) {
+      if (isRunning && !soundEngine.muted) {
+        soundEngine.startArcadeMusic();
+      }
+    }
+  };
 }
 
 // --- 10. MODAL MANAGEMENT & CLIPBOARD TOAST ---
