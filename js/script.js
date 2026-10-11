@@ -8,7 +8,7 @@
  * - Real-time HUD Clock (BRT)
  * - Dynamic Role Typer with Matrix Glyphs
  * - Multi-Theme Neon Engine (Emerald, Cyan, Violet, Amber)
- * - Built-in Interactive Cyber Terminal CLI
+ * - Built-in Cyber Snake Arcade Game (2026)
  * - Avatar Rotator (Photo / Gif / Banner)
  * - Category Filter Engine for Skills & Projects
  * - Clipboard Copy & Cyber Toast Notifications
@@ -122,15 +122,49 @@ class CyberAudioEngine {
 
 const soundEngine = new CyberAudioEngine();
 
-// --- 2. MULTI-THEME NEON ENGINE ---
-const themes = ['emerald', 'cyan', 'violet', 'amber'];
+// --- 2. MULTI-THEME NEON & LIGHT ENGINE ---
+const themes = [
+  'emerald',
+  'cyan',
+  'violet',
+  'amber',
+  'light-emerald',
+  'light-cyan',
+  'light-violet',
+  'light-amber',
+];
 let currentThemeIndex = 0;
+
+const themeNames = {
+  emerald: 'Emerald Matrix (Escuro)',
+  cyan: 'Cyber Cyan (Escuro)',
+  violet: 'Neon Synthwave (Escuro)',
+  amber: 'Solar Gold (Escuro)',
+  'light-emerald': 'Branco Esmeralda (Claro)',
+  'light-cyan': 'Branco Azure (Claro)',
+  'light-violet': 'Branco Lavanda (Claro)',
+  'light-amber': 'Branco Sunset (Claro)',
+  light: 'Branco Esmeralda (Claro)',
+};
 
 function initTheme() {
   const savedTheme = localStorage.getItem('lip_theme') || 'emerald';
   const foundIdx = themes.indexOf(savedTheme);
   currentThemeIndex = foundIdx >= 0 ? foundIdx : 0;
   applyTheme(themes[currentThemeIndex], false);
+
+  // Setup click listeners on theme modal option cards
+  const themeCards = document.querySelectorAll('.theme-option-card');
+  themeCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const themeId = card.getAttribute('data-theme-id');
+      if (themeId) {
+        applyTheme(themeId, true);
+        const found = themes.indexOf(themeId);
+        if (found >= 0) currentThemeIndex = found;
+      }
+    });
+  });
 }
 
 function cycleTheme() {
@@ -143,15 +177,21 @@ function applyTheme(themeName, notify = false) {
   document.documentElement.setAttribute('data-theme', themeName);
   localStorage.setItem('lip_theme', themeName);
 
+  // Update active state in theme modal cards
+  const themeCards = document.querySelectorAll('.theme-option-card');
+  themeCards.forEach((card) => {
+    const id = card.getAttribute('data-theme-id');
+    if (id === themeName || (themeName === 'light' && id === 'light-emerald')) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
+  });
+
   if (notify) {
     soundEngine.playSuccess();
-    const names = {
-      emerald: 'Emerald Matrix',
-      cyan: 'Cyber Cyan',
-      violet: 'Neon Synthwave',
-      amber: 'Solar Gold',
-    };
-    showToast(`Tema: ${names[themeName]}`, 'fa-palette');
+    const label = themeNames[themeName] || themeName;
+    showToast(`Tema: ${label}`, 'fa-palette');
   }
 }
 
@@ -212,6 +252,7 @@ setTimeout(typeLoop, 500);
 function goToScreen(screenId) {
   // Aliases support
   if (screenId === 'menu') screenId = 'skills';
+  if (screenId === 'terminal' || screenId === 'gamer' || screenId === 'game') screenId = 'snake';
 
   const screens = document.querySelectorAll('.card-screen');
   let targetScreen = document.getElementById(`screen-${screenId}`);
@@ -254,17 +295,10 @@ function init3DTilt() {
   // Desativado para manter o card 100% fixo, estável e elegante sem tremer
 }
 
-// --- 7. AVATAR CYCLER EASTER EGG ---
-const avatars = ['img/perfil.jpg', 'img/lipe.gif', 'img/banner-lipe.png'];
-let avatarIdx = 0;
-
+// --- 7. AVATAR (Foto Principal Fixa: lipe.jpg) ---
 function cycleAvatar() {
-  const avatarImg = document.getElementById('profileAvatarImg');
-  if (!avatarImg) return;
-  avatarIdx = (avatarIdx + 1) % avatars.length;
-  avatarImg.src = avatars[avatarIdx];
   soundEngine.playSuccess();
-  showToast('Avatar Alternado!', 'fa-arrows-rotate');
+  showToast('Felipe Silva // Perfil Oficial', 'fa-circle-check');
 }
 
 // --- 8. SKILLS & PROJECTS FILTERING ---
@@ -316,128 +350,430 @@ function initFilters() {
   });
 }
 
-// --- 9. INTERACTIVE CYBER TERMINAL CLI ---
-function initTerminal() {
-  const form = document.getElementById('terminalForm');
-  const input = document.getElementById('terminalInput');
-  const output = document.getElementById('terminalOutput');
-  const clearBtn = document.getElementById('btnTerminalClear');
-  const chips = document.querySelectorAll('.t-chip');
+// --- 9. CYBER SNAKE ARCADE MINI-GAME ---
+function initSnakeGame() {
+  const canvas = document.getElementById('snakeCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-  if (!form || !input || !output) return;
+  const scoreEl = document.getElementById('snakeScore');
+  const highScoreEl = document.getElementById('snakeHighScore');
+  const btnAction = document.getElementById('btnSnakeAction');
+  const btnFullscreen = document.getElementById('btnSnakeFullscreen');
+  const fsIcon = document.getElementById('snakeFsIcon');
+  const gameContainer = document.querySelector('.snake-game-container');
+  const overlay = document.getElementById('snakeOverlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlayDesc = document.getElementById('overlayDesc');
+  const btnOverlayStart = document.getElementById('btnOverlayStart');
 
-  function appendLine(text, type = 'text') {
-    const line = document.createElement('div');
-    line.className = `t-line ${type}`;
-    line.innerHTML = text;
-    output.appendChild(line);
-    output.scrollTop = output.scrollHeight;
-  }
+  const dpadUp = document.getElementById('dpadUp');
+  const dpadDown = document.getElementById('dpadDown');
+  const dpadLeft = document.getElementById('dpadLeft');
+  const dpadRight = document.getElementById('dpadRight');
 
-  function handleCommand(rawCmd) {
-    const cmd = rawCmd.trim().toLowerCase();
-    if (!cmd) return;
+  const GRID_SIZE = 14;
+  const CELL_SIZE = 20; // 14 * 20 = 280px
 
-    soundEngine.playClick();
-    appendLine(`felipe@cyberdeck:~$ ${cmd}`, 'cmd');
+  const START_SPEED = 200; // Começa devagar (200ms)
+  const MIN_SPEED = 65;    // Limite máximo arcade
+  let currentSpeed = START_SPEED;
 
-    switch (cmd) {
-      case 'help':
-        appendLine(
-          `⚡ COMANDOS DISPONÍVEIS:<br>` +
-          `• <strong>whoami</strong>: Informações sobre Felipe Silva<br>` +
-          `• <strong>skills</strong>: Resumo das principais habilidades<br>` +
-          `• <strong>projects</strong>: Lista de projetos desenvolvidos<br>` +
-          `• <strong>contact</strong>: Abrir canais de comunicação<br>` +
-          `• <strong>theme</strong>: Alternar paleta neon do card<br>` +
-          `• <strong>matrix</strong>: Executar sequência visual Matrix<br>` +
-          `• <strong>clear</strong>: Limpar a tela do terminal`,
-          'info'
-        );
-        break;
+  let snake = [];
+  let dir = { x: 0, y: -1 };
+  let nextDir = { x: 0, y: -1 };
+  let food = { x: 7, y: 4 };
+  let score = 0;
+  let highScore = parseInt(localStorage.getItem('lip_snake_record') || '0', 10);
+  let isRunning = false;
+  let gameInterval = null;
+  let foodPulse = 0;
 
-      case 'whoami':
-        appendLine(
-          `👤 <strong>Felipe Silva</strong> (@LipDev)<br>` +
-          `Graduando em Ciência da Computação (Estácio) | Técnico em ADS (EEEP).<br>` +
-          `Desenvolvedor focado em interfaces elegantes e tecnologia inovadora.`,
-          'res'
-        );
-        break;
+  if (highScoreEl) highScoreEl.textContent = highScore.toString();
 
-      case 'skills':
-        appendLine(
-          `💻 <strong>STACK PRINCIPAL:</strong><br>` +
-          `Frontend: HTML5, CSS3, JavaScript (ES6+), UX/UI Design<br>` +
-          `Backend: PHP, Node.js, Python, Java POO, C/C++<br>` +
-          `Dados & Ferramentas: MySQL, Streamlit, Git/GitHub, GenAI`,
-          'res'
-        );
-        break;
-
-      case 'projects':
-        appendLine(
-          `🚀 <strong>PROJETOS PUBLICADOS (Mais Recentes no Topo):</strong><br>` +
-          `1. FinnBot AI (Python & IA Financeira - 2026)<br>` +
-          `2. Jogos de Matemática (Plataforma Gamificada - 2025)<br>` +
-          `3. Delicious Burger (Delivery & Cardápio Digital - 2025)<br>` +
-          `4. MedClinic (Sistema de Agendamento Clínico V1 & V2 - 2024)<br>` +
-          `5. CandyDreams (E-commerce de Confeitaria - 2024)`,
-          'res'
-        );
-        break;
-
-      case 'contact':
-        appendLine(`📡 Abrindo painel de conexões diretas...`, 'info');
-        openModal('contactModal');
-        break;
-
-      case 'theme':
-        cycleTheme();
-        appendLine(`🎨 Tema visual alterado com sucesso!`, 'info');
-        break;
-
-      case 'matrix':
-        appendLine(`🟢 01000110 01000101 01001100 01001001 01010000 01000101`, 'info');
-        appendLine(`🟢 ACESSO CONCEDIDO: A MATRIX RECONHECE O TALENTO.`, 'info');
-        break;
-
-      case 'clear':
-        output.innerHTML = '';
-        appendLine(`⚡ Terminal limpo. Digite <strong>help</strong> para comandos.`, 'info');
-        break;
-
-      case 'sudo':
-        appendLine(`👑 Acesso Root Irrestrito: Felipe Silva é o arquiteto do seu futuro.`, 'info');
-        break;
-
+  function getThemeColors() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'emerald';
+    switch (currentTheme) {
+      case 'cyan':
+        return { primary: '#00f0ff', glow: 'rgba(0, 240, 255, 0.45)', body: '#0284c7' };
+      case 'violet':
+        return { primary: '#c084fc', glow: 'rgba(192, 132, 252, 0.45)', body: '#9333ea' };
+      case 'amber':
+        return { primary: '#fbbf24', glow: 'rgba(251, 191, 36, 0.45)', body: '#d97706' };
+      case 'light-emerald':
+      case 'light':
+        return { primary: '#059669', glow: 'rgba(5, 150, 105, 0.45)', body: '#10b981' };
+      case 'light-cyan':
+        return { primary: '#0284c7', glow: 'rgba(2, 132, 199, 0.45)', body: '#0ea5e9' };
+      case 'light-violet':
+        return { primary: '#7c3aed', glow: 'rgba(124, 58, 237, 0.45)', body: '#a855f7' };
+      case 'light-amber':
+        return { primary: '#d97706', glow: 'rgba(217, 119, 6, 0.45)', body: '#f59e0b' };
       default:
-        appendLine(`Comando '${cmd}' não reconhecido. Digite <strong>help</strong>.`, 'warn');
-        break;
+        return { primary: '#00ff87', glow: 'rgba(0, 255, 135, 0.45)', body: '#10b981' };
     }
   }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const val = input.value;
-    input.value = '';
-    handleCommand(val);
+  function spawnFood() {
+    let validPos = false;
+    let newFood = { x: 0, y: 0 };
+    let attempts = 0;
+    while (!validPos && attempts < 200) {
+      attempts++;
+      newFood.x = Math.floor(Math.random() * GRID_SIZE);
+      newFood.y = Math.floor(Math.random() * GRID_SIZE);
+      validPos = !snake.some((seg) => seg.x === newFood.x && seg.y === newFood.y);
+    }
+    food = newFood;
+  }
+
+  function resetGame() {
+    snake = [
+      { x: 7, y: 8 },
+      { x: 7, y: 9 },
+      { x: 7, y: 10 },
+    ];
+    dir = { x: 0, y: -1 };
+    nextDir = { x: 0, y: -1 };
+    score = 0;
+    if (scoreEl) scoreEl.textContent = '0';
+    spawnFood();
+  }
+
+  function draw() {
+    const colors = getThemeColors();
+    foodPulse = (foodPulse + 0.12) % (Math.PI * 2);
+
+    // Clear background
+    ctx.fillStyle = '#060910';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Subtle Grid lines
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= GRID_SIZE; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * CELL_SIZE, 0);
+      ctx.lineTo(i * CELL_SIZE, canvas.height);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, i * CELL_SIZE);
+      ctx.lineTo(canvas.width, i * CELL_SIZE);
+      ctx.stroke();
+    }
+
+    // Draw Food (Pulsing glowing cyber orb)
+    const foodCenterX = food.x * CELL_SIZE + CELL_SIZE / 2;
+    const foodCenterY = food.y * CELL_SIZE + CELL_SIZE / 2;
+    const radius = CELL_SIZE / 2 - 3 + Math.sin(foodPulse) * 1.5;
+
+    ctx.save();
+    ctx.shadowBlur = 14;
+    ctx.shadowColor = '#f59e0b';
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.arc(foodCenterX, foodCenterY, Math.max(3, radius), 0, Math.PI * 2);
+    ctx.fill();
+
+    // Inner bright core
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(foodCenterX, foodCenterY, Math.max(1.5, radius * 0.45), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Draw Snake Body
+    for (let i = snake.length - 1; i >= 0; i--) {
+      const seg = snake[i];
+      const isHead = i === 0;
+      const px = seg.x * CELL_SIZE + 1.5;
+      const py = seg.y * CELL_SIZE + 1.5;
+      const size = CELL_SIZE - 3;
+      const cornerRadius = isHead ? 6 : 4;
+
+      ctx.save();
+      if (isHead) {
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = colors.primary;
+        ctx.fillStyle = colors.primary;
+      } else {
+        const alpha = Math.max(0.4, 1 - (i / snake.length) * 0.55);
+        ctx.fillStyle = colors.body;
+        ctx.globalAlpha = alpha;
+      }
+
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(px, py, size, size, cornerRadius);
+      } else {
+        ctx.rect(px, py, size, size);
+      }
+      ctx.fill();
+
+      // If head, draw small cyber eyes
+      if (isHead) {
+        ctx.fillStyle = '#060910';
+        let eye1X, eye1Y, eye2X, eye2Y;
+        if (dir.x === 1) {
+          eye1X = px + size - 4; eye1Y = py + 4;
+          eye2X = px + size - 4; eye2Y = py + size - 4;
+        } else if (dir.x === -1) {
+          eye1X = px + 4; eye1Y = py + 4;
+          eye2X = px + 4; eye2Y = py + size - 4;
+        } else if (dir.y === 1) {
+          eye1X = px + 4; eye1Y = py + size - 4;
+          eye2X = px + size - 4; eye2Y = py + size - 4;
+        } else {
+          eye1X = px + 4; eye1Y = py + 4;
+          eye2X = px + size - 4; eye2Y = py + 4;
+        }
+        ctx.beginPath();
+        ctx.arc(eye1X, eye1Y, 1.8, 0, Math.PI * 2);
+        ctx.arc(eye2X, eye2Y, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function step() {
+    dir = { ...nextDir };
+    const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+    // Collision with walls
+    if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
+      gameOver();
+      return;
+    }
+
+    // Collision with self
+    if (snake.some((seg) => seg.x === head.x && seg.y === head.y)) {
+      gameOver();
+      return;
+    }
+
+    // Move forward
+    snake.unshift(head);
+
+    // Check if food eaten
+    if (head.x === food.x && head.y === food.y) {
+      score += 10;
+      if (scoreEl) scoreEl.textContent = score.toString();
+      soundEngine.playSuccess();
+
+      // New high score check
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('lip_snake_record', highScore.toString());
+        if (highScoreEl) highScoreEl.textContent = highScore.toString();
+      }
+
+      spawnFood();
+      speedUp();
+    } else {
+      snake.pop();
+    }
+
+    draw();
+  }
+
+  function speedUp() {
+    clearInterval(gameInterval);
+    // Começa devagar e acelera a cada ponto/comida capturada (+10 pts)
+    const pointsEaten = Math.floor(score / 10);
+    currentSpeed = Math.max(MIN_SPEED, START_SPEED - (pointsEaten * 6));
+    gameInterval = setInterval(step, currentSpeed);
+  }
+
+  function startGame() {
+    clearInterval(gameInterval);
+    resetGame();
+    currentSpeed = START_SPEED;
+    isRunning = true;
+    if (overlay) overlay.classList.add('hidden');
+    if (btnAction) {
+      btnAction.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Reiniciar';
+    }
+    soundEngine.playSwitch();
+    draw();
+    gameInterval = setInterval(step, currentSpeed);
+  }
+
+  function gameOver() {
+    isRunning = false;
+    clearInterval(gameInterval);
+    soundEngine.playBeep(180, 'sawtooth', 0.25, 0.08);
+
+    if (overlayTitle) {
+      overlayTitle.textContent = 'GAME OVER';
+      overlayTitle.className = 'game-over-title';
+    }
+    if (overlayDesc) {
+      overlayDesc.innerHTML = `Pontuação: <strong>${score}</strong> | Recorde: <strong>${highScore}</strong><br>Pressione o botão para tentar novamente!`;
+    }
+    if (btnOverlayStart) {
+      btnOverlayStart.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Jogar Novamente';
+    }
+    if (btnAction) {
+      btnAction.innerHTML = '<i class="fa-solid fa-play"></i> Iniciar';
+    }
+    if (overlay) overlay.classList.remove('hidden');
+  }
+
+  function changeDirection(newDir) {
+    // Prevent 180 degree turns
+    if (newDir.x !== 0 && dir.x !== 0) return;
+    if (newDir.y !== 0 && dir.y !== 0) return;
+    nextDir = newDir;
+    soundEngine.playClick();
+  }
+
+  // Key listeners
+  window.addEventListener('keydown', (e) => {
+    // Only capture keys if snake screen is active
+    const snakeScreen = document.getElementById('screen-snake');
+    if (!snakeScreen || !snakeScreen.classList.contains('active')) return;
+
+    switch (e.key) {
+      case 'ArrowUp':
+      case 'w':
+      case 'W':
+        e.preventDefault();
+        changeDirection({ x: 0, y: -1 });
+        break;
+      case 'ArrowDown':
+      case 's':
+      case 'S':
+        e.preventDefault();
+        changeDirection({ x: 0, y: 1 });
+        break;
+      case 'ArrowLeft':
+      case 'a':
+      case 'A':
+        e.preventDefault();
+        changeDirection({ x: -1, y: 0 });
+        break;
+      case 'ArrowRight':
+      case 'd':
+      case 'D':
+        e.preventDefault();
+        changeDirection({ x: 1, y: 0 });
+        break;
+      case ' ':
+        e.preventDefault();
+        if (!isRunning) startGame();
+        break;
+    }
   });
 
-  chips.forEach((chip) => {
-    chip.addEventListener('click', () => {
-      const cmd = chip.getAttribute('data-cmd');
-      if (cmd) handleCommand(cmd);
-    });
-  });
+  // D-Pad Touch / Pointer listeners
+  function setupDpadBtn(btn, direction) {
+    if (!btn) return;
+    const trigger = (e) => {
+      e.preventDefault();
+      if (!isRunning) {
+        startGame();
+      }
+      changeDirection(direction);
+    };
+    btn.addEventListener('pointerdown', trigger);
+  }
 
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      output.innerHTML = '';
-      appendLine(`⚡ Terminal limpo. Digite <strong>help</strong> para comandos.`, 'info');
-      soundEngine.playClick();
+  setupDpadBtn(dpadUp, { x: 0, y: -1 });
+  setupDpadBtn(dpadDown, { x: 0, y: 1 });
+  setupDpadBtn(dpadLeft, { x: -1, y: 0 });
+  setupDpadBtn(dpadRight, { x: 1, y: 0 });
+
+  // Touch Swipe on Canvas for Mobile
+  let touchStartX = 0;
+  let touchStartY = 0;
+  canvas.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  canvas.addEventListener('touchend', (e) => {
+    if (e.changedTouches.length > 0) {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+
+      if (Math.max(absDx, absDy) > 20) {
+        if (!isRunning) startGame();
+        if (absDx > absDy) {
+          if (dx > 0) changeDirection({ x: 1, y: 0 });
+          else changeDirection({ x: -1, y: 0 });
+        } else {
+          if (dy > 0) changeDirection({ x: 0, y: 1 });
+          else changeDirection({ x: 0, y: -1 });
+        }
+      }
+    }
+  }, { passive: true });
+
+  // Buttons
+  if (btnAction) {
+    btnAction.addEventListener('click', () => {
+      startGame();
     });
   }
+  if (btnOverlayStart) {
+    btnOverlayStart.addEventListener('click', () => {
+      startGame();
+    });
+  }
+
+  // Fullscreen toggle logic
+  function toggleFullscreen() {
+    if (!gameContainer) return;
+    const isFs = Boolean(document.fullscreenElement || document.webkitFullscreenElement || gameContainer.classList.contains('fullscreen-mode'));
+
+    if (!isFs) {
+      if (gameContainer.requestFullscreen) {
+        gameContainer.requestFullscreen().catch(() => {});
+      } else if (gameContainer.webkitRequestFullscreen) {
+        gameContainer.webkitRequestFullscreen();
+      }
+      gameContainer.classList.add('fullscreen-mode');
+      if (fsIcon) fsIcon.className = 'fa-solid fa-compress';
+      soundEngine.playSwitch();
+      showToast('Modo Tela Cheia Ativado', 'fa-expand');
+    } else {
+      if (document.exitFullscreen && (document.fullscreenElement || document.webkitFullscreenElement)) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen && (document.fullscreenElement || document.webkitFullscreenElement)) {
+        document.webkitExitFullscreen();
+      }
+      gameContainer.classList.remove('fullscreen-mode');
+      if (fsIcon) fsIcon.className = 'fa-solid fa-expand';
+      soundEngine.playClick();
+      showToast('Modo Padrão', 'fa-compress');
+    }
+  }
+
+  if (btnFullscreen) {
+    btnFullscreen.addEventListener('click', toggleFullscreen);
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    const isFs = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+    if (!isFs) {
+      if (gameContainer) gameContainer.classList.remove('fullscreen-mode');
+      if (fsIcon) fsIcon.className = 'fa-solid fa-expand';
+    } else {
+      if (gameContainer) gameContainer.classList.add('fullscreen-mode');
+      if (fsIcon) fsIcon.className = 'fa-solid fa-compress';
+    }
+  });
+
+  // Initial draw of starting board
+  resetGame();
+  draw();
 }
 
 // --- 10. MODAL MANAGEMENT & CLIPBOARD TOAST ---
@@ -484,6 +820,19 @@ function initModals() {
     });
   }
 
+  // Theme Selector Modal
+  const openThemeBtn = document.getElementById('btnThemeToggle');
+  const closeThemeBtn = document.getElementById('btnCloseTheme');
+  const themeModal = document.getElementById('themeModal');
+
+  if (openThemeBtn) openThemeBtn.addEventListener('click', () => openModal('themeModal'));
+  if (closeThemeBtn) closeThemeBtn.addEventListener('click', () => closeModal('themeModal'));
+  if (themeModal) {
+    themeModal.addEventListener('click', (e) => {
+      if (e.target === themeModal) closeModal('themeModal');
+    });
+  }
+
   // Copy Email
   const copyEmailCard = document.getElementById('btnCopyEmail');
   if (copyEmailCard) {
@@ -507,11 +856,21 @@ function initModals() {
     });
   }
 
+  // Download CV Feedback
+  const downloadCvBtn = document.getElementById('btnDownloadCV');
+  if (downloadCvBtn) {
+    downloadCvBtn.addEventListener('click', () => {
+      soundEngine.playSuccess();
+      showToast('Baixando currículo de Felipe Silva...', 'fa-file-arrow-down');
+    });
+  }
+
   // Escape key closes modals
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal('contactModal');
       closeModal('shareModal');
+      closeModal('themeModal');
     }
   });
 }
@@ -568,6 +927,11 @@ function initCyberCanvas() {
       case 'cyan': return '0, 240, 255';
       case 'violet': return '192, 132, 252';
       case 'amber': return '251, 191, 36';
+      case 'light-emerald':
+      case 'light': return '5, 150, 105';
+      case 'light-cyan': return '2, 132, 199';
+      case 'light-violet': return '124, 58, 237';
+      case 'light-amber': return '217, 119, 6';
       default: return '0, 255, 135';
     }
   }
@@ -614,7 +978,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   init3DTilt();
   initFilters();
-  initTerminal();
+  initSnakeGame();
   initModals();
   initCyberCanvas();
 
@@ -625,8 +989,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Audio button click
   const soundBtn = document.getElementById('btnSoundToggle');
   if (soundBtn) soundBtn.addEventListener('click', () => soundEngine.toggleSound());
-
-  // Theme button click
-  const themeBtn = document.getElementById('btnThemeToggle');
-  if (themeBtn) themeBtn.addEventListener('click', cycleTheme);
 });

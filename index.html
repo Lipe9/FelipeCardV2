@@ -86,7 +86,7 @@
             </div>
           </header>
 
-          <!-- Interactive Profile Banner & Avatar Section -->
+          <!-- Profile Hero Section -->
           <section class="profile-hero">
             <div class="banner-box">
               <img
@@ -101,22 +101,19 @@
             </div>
 
             <div class="avatar-row">
-              <div class="avatar-container" id="avatarBox" title="Clique para alternar avatar">
+              <div class="avatar-container" id="avatarBox" title="Felipe Silva">
                 <div class="hud-reticle-outer"></div>
                 <div class="hud-reticle-inner"></div>
                 <div class="avatar-img-frame">
                   <img
                     id="profileAvatarImg"
-                    src="img/perfil.jpg"
-                    alt="Felipe Silva Foto de Perfil"
+                    src="img/lipe.jpg"
+                    alt="Felipe Silva"
                   />
                 </div>
                 <div class="avatar-badge" title="Desenvolvedor Verificado">
                   <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <button class="avatar-swap-hint" title="Alternar foto/gif">
-                  <i class="fa-solid fa-arrows-rotate"></i>
-                </button>
               </div>
 
               <div class="profile-title-block">
@@ -200,12 +197,12 @@
                     <i class="fa-solid fa-code-branch stat-bg-icon"></i>
                   </div>
                   <div class="stat-card">
-                    <span class="stat-number">5+</span>
+                    <span class="stat-number">6+</span>
                     <span class="stat-label">Projetos Publicados</span>
                     <i class="fa-solid fa-rocket stat-bg-icon"></i>
                   </div>
                   <div class="stat-card">
-                    <span class="stat-number">8+</span>
+                    <span class="stat-number">15+</span>
                     <span class="stat-label">Certificados Oficiais</span>
                     <i class="fa-solid fa-certificate stat-bg-icon"></i>
                   </div>
@@ -227,11 +224,11 @@
                 <!-- Quick Highlights -->
                 <div class="quick-highlights">
                   <div class="highlight-item" onclick="goToScreen('projects')">
-                    <div class="hl-icon"><i class="fa-solid fa-robot"></i></div>
+                    <div class="hl-icon"><i class="fa-solid fa-clapperboard"></i></div>
                     <div class="hl-content">
-                      <span class="hl-tag">DESTAQUE RECENTE</span>
-                      <h4>FinnBot AI // Chatbot Financeiro</h4>
-                      <p>Inteligência artificial aplicada a finanças em Python</p>
+                      <span class="hl-tag">LANÇAMENTO RECENTE</span>
+                      <h4>L1peCine // Filmes & Séries</h4>
+                      <p>Catálogo cinematográfico completo e trailers interativos</p>
                     </div>
                     <i class="fa-solid fa-arrow-right-long hl-arrow"></i>
                   </div>
@@ -247,14 +244,16 @@
                   </div>
                 </div>
 
-                <!-- Action CTA Buttons -->
+                <!-- Action CTA Button -->
                 <div class="home-cta-row">
-                  <button class="cyber-btn primary-glow" onclick="goToScreen('projects')">
-                    <i class="fa-solid fa-laptop-code"></i> Explorar Projetos
-                  </button>
-                  <button class="cyber-btn secondary-glass" onclick="goToScreen('courses')">
-                    <i class="fa-solid fa-award"></i> Credenciais
-                  </button>
+                  <a
+                    href="img/curriculo-felipe-silva.pdf"
+                    download="Currículo - Felipe Silva.pdf"
+                    class="cyber-btn primary-glow w-full"
+                    id="btnDownloadCV"
+                  >
+                    <i class="fa-solid fa-file-arrow-down"></i> Baixar Currículo
+                  </a>
                 </div>
               </div>
             </section>
@@ -515,13 +514,48 @@
 
                 <!-- Projects Filter -->
                 <div class="cyber-filter-bar">
-                  <button class="filter-chip active" data-pfilter="all">Todos (5)</button>
+                  <button class="filter-chip active" data-pfilter="all">Todos (6)</button>
                   <button class="filter-chip" data-pfilter="ai">IA & Bots</button>
                   <button class="filter-chip" data-pfilter="web">Web & Apps</button>
                 </div>
 
                 <div class="projects-container" id="projectsContainer">
-                  <!-- Projeto 1: FinnBot AI (2026) - Mais Recente -->
+                  <!-- Projeto 1: L1peCine (2026) - Lançamento Recente -->
+                  <article class="cyber-project-card" data-pcat="web">
+                    <div class="project-card-header">
+                      <div class="p-title-group">
+                        <span class="p-category-tag cine-tag">
+                          <i class="fa-solid fa-clapperboard"></i> CINEMA // STREAMING
+                        </span>
+                        <h3>L1peCine</h3>
+                      </div>
+                      <span class="p-year-badge">2026</span>
+                    </div>
+
+                    <p class="p-desc">
+                      Plataforma cinematográfica completa de filmes e séries: assista trailers oficiais, organize seus títulos favoritos e acesse catálogo ilimitado.
+                    </p>
+
+                    <div class="p-tech-stack">
+                      <span>Filmes & Séries</span>
+                      <span>JavaScript</span>
+                      <span>API / Trailers</span>
+                      <span>Netlify</span>
+                    </div>
+
+                    <div class="p-actions">
+                      <a
+                        href="https://l1pecine.netlify.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="p-launch-btn primary"
+                      >
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar L1peCine
+                      </a>
+                    </div>
+                  </article>
+
+                  <!-- Projeto 2: FinnBot AI (2026) -->
                   <article class="cyber-project-card" data-pcat="ai">
                     <div class="project-card-header">
                       <div class="p-title-group">
@@ -716,18 +750,18 @@
                 </div>
 
                 <div class="certificates-list">
-                  <!-- 1. Bradesco GenAI & Dados (2026) - Mais Recente -->
+                  <!-- 1. AWS Cloud Practitioner Essentials (Set. 2026) - Mais Recente -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
-                      <div class="cert-issuer-badge bradesco-badge">
-                        <i class="fa-solid fa-microchip"></i> Bradesco & DIO
+                      <div class="cert-issuer-badge aws-badge">
+                        <i class="fa-brands fa-aws"></i> AWS
                       </div>
-                      <span class="cert-year">2026</span>
+                      <span class="cert-year">Set. 2026</span>
                     </div>
-                    <h4>GenAI & Dados</h4>
-                    <p class="cert-desc">Inteligência Artificial Generativa e Tratamento de Dados</p>
+                    <h4>AWS Cloud Practitioner Essentials</h4>
+                    <p class="cert-desc">AWS Training Online • Credencial: V1ZR7QAGKS</p>
                     <a
-                      href="https://www.dio.me/certificate/L9HYF1RM/share"
+                      href="https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials-portugus/V1ZR7QAGKS"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="cert-verify-link"
@@ -736,16 +770,96 @@
                     </a>
                   </div>
 
-                  <!-- 2. IFRS Node.js (2026) -->
+                  <!-- 2. Coletivo Coca-Cola Brasil (Set. 2026) -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge coca-badge">
+                        <i class="fa-solid fa-award"></i> Instituto Coca-Cola
+                      </div>
+                      <span class="cert-year">Set. 2026</span>
+                    </div>
+                    <h4>Coletivo Coca-Cola Brasil</h4>
+                    <p class="cert-desc">Instituto Coca-Cola Brasil • Credencial: 003bJ000018k8SDQAY</p>
+                    <a
+                      href="https://institutococacolabrasil.my.site.com/coletivococacolajovem/certificado?id=003bJ000018k8SDQAY&cursoId=a19bJ0000014bmnQAA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                  <!-- 3. Do Excel ao SQL (Jan. 2026) -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge dio-badge">
+                        <i class="fa-solid fa-database"></i> DIO
+                      </div>
+                      <span class="cert-year">Jan. 2026</span>
+                    </div>
+                    <h4>Do Excel ao SQL: Domine seus Dados com Inteligência</h4>
+                    <p class="cert-desc">Digital Innovation One • Credencial: DCDJEUTO</p>
+                    <a
+                      href="https://www.dio.me/certificate/DCDJEUTO/share"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                  <!-- 4. Python e suas Estruturas de Dados (Jan. 2026) -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge dio-badge">
+                        <i class="fa-brands fa-python"></i> DIO
+                      </div>
+                      <span class="cert-year">Jan. 2026</span>
+                    </div>
+                    <h4>Python e suas Estruturas de Dados</h4>
+                    <p class="cert-desc">Digital Innovation One • Credencial: RD01KJQK</p>
+                    <a
+                      href="https://www.dio.me/certificate/RD01KJQK/share"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                  <!-- 5. GenAI & Dados (Jan. 2026) -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge bradesco-badge">
+                        <i class="fa-solid fa-microchip"></i> Bradesco
+                      </div>
+                      <span class="cert-year">Jan. 2026</span>
+                    </div>
+                    <h4>GenAI & Dados</h4>
+                    <p class="cert-desc">Bradesco & DIO • Credencial: 2RCAOURK</p>
+                    <a
+                      href="https://www.dio.me/certificate/2RCAOURK/share"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                  <!-- 6. Node.js (Jan. 2026) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
                       <div class="cert-issuer-badge ifrs-badge">
                         <i class="fa-solid fa-graduation-cap"></i> IFRS
                       </div>
-                      <span class="cert-year">2026</span>
+                      <span class="cert-year">Jan. 2026</span>
                     </div>
-                    <h4>Node.js: Introduction to Modern API Development</h4>
-                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia</p>
+                    <h4>Node.js: Introdução ao Desenvolvimento de APIs Modernas</h4>
+                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia • Credencial: 697dfe7a-a5e0-49c7-bab6-bcd40aa8162f</p>
                     <a
                       href="https://moodle.ifrs.edu.br/mod/simplecertificate/verify.php?code=697dfe7a-a5e0-49c7-bab6-bcd40aa8162f"
                       target="_blank"
@@ -756,16 +870,16 @@
                     </a>
                   </div>
 
-                  <!-- 3. IFRS PHP (2026) -->
+                  <!-- 7. PHP (Jan. 2026) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
                       <div class="cert-issuer-badge ifrs-badge">
                         <i class="fa-solid fa-graduation-cap"></i> IFRS
                       </div>
-                      <span class="cert-year">2026</span>
+                      <span class="cert-year">Jan. 2026</span>
                     </div>
-                    <h4>PHP: Practical Fundamentals for Web Development</h4>
-                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia</p>
+                    <h4>PHP: Fundamentos Práticos para o Desenvolvimento Web</h4>
+                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia • Credencial: 697dfef0-75fc-48c6-8ecb-5f1e0aa80b0a</p>
                     <a
                       href="https://moodle.ifrs.edu.br/mod/simplecertificate/verify.php?code=697dfef0-75fc-48c6-8ecb-5f1e0aa80b0a"
                       target="_blank"
@@ -776,16 +890,16 @@
                     </a>
                   </div>
 
-                  <!-- 4. IFRS JavaScript (2026) -->
+                  <!-- 8. JavaScript (Jan. 2026) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
                       <div class="cert-issuer-badge ifrs-badge">
                         <i class="fa-solid fa-graduation-cap"></i> IFRS
                       </div>
-                      <span class="cert-year">2026</span>
+                      <span class="cert-year">Jan. 2026</span>
                     </div>
-                    <h4>JavaScript: Fundamentals for Interactive Web Development</h4>
-                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia</p>
+                    <h4>JavaScript: Fundamentos para Desenvolvimento Web Interativo</h4>
+                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia • Credencial: 697dfd2f-4724-4a22-95cd-2b180aa8090e</p>
                     <a
                       href="https://moodle.ifrs.edu.br/mod/simplecertificate/verify.php?code=697dfd2f-4724-4a22-95cd-2b180aa8090e"
                       target="_blank"
@@ -796,16 +910,16 @@
                     </a>
                   </div>
 
-                  <!-- 5. IFRS CSS3 (2025) -->
+                  <!-- 9. CSS3 (Mar. 2025) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
                       <div class="cert-issuer-badge ifrs-badge">
                         <i class="fa-solid fa-graduation-cap"></i> IFRS
                       </div>
-                      <span class="cert-year">2025</span>
+                      <span class="cert-year">Mar. 2025</span>
                     </div>
-                    <h4>CSS3: Styling Web Pages with Style</h4>
-                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia</p>
+                    <h4>CSS3: Estilizando Páginas Web com Estilo</h4>
+                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia • Credencial: 67dd410c-7328-4d61-a003-024d0ade0004</p>
                     <a
                       href="https://moodle.ifrs.edu.br/mod/simplecertificate/verify.php?code=67dd410c-7328-4d61-a003-024d0ade0004"
                       target="_blank"
@@ -816,16 +930,16 @@
                     </a>
                   </div>
 
-                  <!-- 6. IFRS HTML5 (2025) -->
+                  <!-- 10. HTML5 (Mar. 2025) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
                       <div class="cert-issuer-badge ifrs-badge">
                         <i class="fa-solid fa-graduation-cap"></i> IFRS
                       </div>
-                      <span class="cert-year">2025</span>
+                      <span class="cert-year">Mar. 2025</span>
                     </div>
-                    <h4>HTML5: Fundamentals for Building Modern Web Pages</h4>
-                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia</p>
+                    <h4>HTML5: Fundamentos para Construção de Páginas Web Modernas</h4>
+                    <p class="cert-desc">Instituto Federal de Educação, Ciência e Tecnologia • Credencial: 67d46bc9-e47c-41f6-a780-0f630ade0004</p>
                     <a
                       href="https://moodle.ifrs.edu.br/mod/simplecertificate/verify.php?code=67d46bc9-e47c-41f6-a780-0f630ade0004"
                       target="_blank"
@@ -836,16 +950,56 @@
                     </a>
                   </div>
 
-                  <!-- 7. Google UX Design (2024) -->
+                  <!-- 11. Technical Support Fundamentals (Jun. 2024) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
                       <div class="cert-issuer-badge google-badge">
                         <i class="fa-brands fa-google"></i> Google
                       </div>
-                      <span class="cert-year">2024</span>
+                      <span class="cert-year">Jun. 2024</span>
+                    </div>
+                    <h4>Technical Support Fundamentals</h4>
+                    <p class="cert-desc">Coursera / Google Career Certificates • Credencial: XZ7T5XJAJH8D</p>
+                    <a
+                      href="https://www.coursera.org/account/accomplishments/records/XZ7T5XJAJH8D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                  <!-- 12. Start the UX Design Process - Google (Jun. 2024) -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge google-badge">
+                        <i class="fa-brands fa-google"></i> Google
+                      </div>
+                      <span class="cert-year">Jun. 2024</span>
+                    </div>
+                    <h4>Start the UX Design Process: Empathize, Define, and Ideate</h4>
+                    <p class="cert-desc">Coursera / Google Career Certificates • Credencial: ADCWTVQ9WT4Z</p>
+                    <a
+                      href="https://www.coursera.org/account/accomplishments/records/ADCWTVQ9WT4Z"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                   <!-- 14. Foundations of UX Design - Google (Mai. 2024) -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge google-badge">
+                        <i class="fa-brands fa-google"></i> Google
+                      </div>
+                      <span class="cert-year">Mai. 2024</span>
                     </div>
                     <h4>Foundations of User Experience (UX) Design</h4>
-                    <p class="cert-desc">Coursera / Google Career Certificates</p>
+                    <p class="cert-desc">Coursera / Google Career Certificates • Credencial: AKXWFUV33ZZB</p>
                     <a
                       href="https://www.coursera.org/account/accomplishments/records/AKXWFUV33ZZB"
                       target="_blank"
@@ -856,18 +1010,40 @@
                     </a>
                   </div>
 
-                  <!-- 8. Google Tech Support (2024) - Mais Antigo -->
+                  <!-- 13. Noções básicas de 5G - Huawei (Jun. 2024) -->
                   <div class="cert-item-card">
                     <div class="cert-top-row">
-                      <div class="cert-issuer-badge google-badge">
-                        <i class="fa-brands fa-google"></i> Google
+                      <div class="cert-issuer-badge huawei-badge">
+                        <i class="fa-solid fa-tower-broadcast"></i> Huawei ICT Academy
                       </div>
-                      <span class="cert-year">2024</span>
+                      <span class="cert-year">Abr. 2024</span>
                     </div>
-                    <h4>Technical Support Fundamentals</h4>
-                    <p class="cert-desc">Coursera / Google Career Certificates</p>
+                    <h4>Noções básicas de 5G</h4>
+                    <p class="cert-desc">Huawei ICT Academy - IFCE • Credencial: ICT20250612002898</p>
                     <a
-                      href="https://www.coursera.org/account/accomplishments/records/XZ7T5XJAJH8D"
+                      href="https://talent.shixizhi.huawei.com/portal/1365189427395223554?pageId=1365189428351492098&navGroupId=1365189428557012994&sxz-lang=zh_CN"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-verify-link"
+                    >
+                      <i class="fa-solid fa-shield-check"></i> Verificar Credencial Oficial
+                    </a>
+                  </div>
+
+                 
+
+                  <!-- 15. HCIA-5G - Huawei (Abr. 2024) - Mais Antigo -->
+                  <div class="cert-item-card">
+                    <div class="cert-top-row">
+                      <div class="cert-issuer-badge huawei-badge">
+                        <i class="fa-solid fa-tower-broadcast"></i> Huawei
+                      </div>
+                      <span class="cert-year">Abr. 2024</span>
+                    </div>
+                    <h4>HCIA-5G</h4>
+                    <p class="cert-desc">Huawei Certified ICT Associate • Credencial: EBG20240424004000</p>
+                    <a
+                      href="https://talent.shixizhi.huawei.com/portal/1365189427395223554?pageId=1365189428351492098&navGroupId=1365189428557012994&sxz-lang=zh_CN"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="cert-verify-link"
@@ -879,58 +1055,75 @@
               </div>
             </section>
 
-            <!-- SCREEN 6: TERMINAL (EASTER EGG INTERATIVO) -->
-            <section id="screen-terminal" class="card-screen">
+            <!-- SCREEN 6: CYBER GAMER ARCADE -->
+            <section id="screen-snake" class="card-screen">
               <div class="screen-scrollable">
-                <div class="terminal-container">
-                  <div class="terminal-bar">
-                    <div class="terminal-dots">
-                      <span class="dot red"></span>
-                      <span class="dot yellow"></span>
-                      <span class="dot green"></span>
+                <div class="screen-heading">
+                  <span class="heading-tag">ARCADE // MINI-GAME</span>
+                  <h2>Modo Gamer</h2>
+                </div>
+
+                <div class="snake-game-container">
+                  <!-- Scoreboard -->
+                  <div class="snake-scoreboard">
+                    <div class="score-box">
+                      <span class="score-label">PONTOS</span>
+                      <span class="score-val" id="snakeScore">0</span>
                     </div>
-                    <span class="terminal-title">felipe@cyberdeck:~$ bash</span>
-                    <button class="terminal-clear-btn" id="btnTerminalClear" title="Limpar">
-                      <i class="fa-solid fa-trash-can"></i>
+
+                    <div class="snake-score-actions">
+                      <button class="snake-start-btn" id="btnSnakeAction">
+                        <i class="fa-solid fa-play"></i> Iniciar
+                      </button>
+                      <button
+                        class="snake-fullscreen-btn"
+                        id="btnSnakeFullscreen"
+                        title="Tela Cheia"
+                        aria-label="Alternar Tela Cheia"
+                      >
+                        <i class="fa-solid fa-expand" id="snakeFsIcon"></i>
+                      </button>
+                    </div>
+
+                    <div class="score-box">
+                      <span class="score-label">RECORDE</span>
+                      <span class="score-val record" id="snakeHighScore">0</span>
+                    </div>
+                  </div>
+
+                  <!-- Canvas Arcade Board -->
+                  <div class="snake-canvas-frame">
+                    <canvas id="snakeCanvas" width="280" height="280"></canvas>
+
+                    <!-- Overlay for Start / Game Over -->
+                    <div class="snake-game-overlay" id="snakeOverlay">
+                      <div class="game-start-title" id="overlayTitle">CYBER GAMER</div>
+                      <p class="game-overlay-desc" id="overlayDesc">
+                        Controle seu avatar com as setas do teclado ou use o direcional abaixo!
+                      </p>
+                      <button class="cyber-btn primary-glow" id="btnOverlayStart">
+                        <i class="fa-solid fa-gamepad"></i> Começar Jogo
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- D-Pad Controls for Mobile & Quick Play -->
+                  <div class="snake-dpad-controls">
+                    <button class="dpad-btn" id="dpadUp" aria-label="Cima">
+                      <i class="fa-solid fa-caret-up"></i>
                     </button>
-                  </div>
-
-                  <div class="terminal-output" id="terminalOutput">
-                    <div class="t-line info">
-                      ⚡ [SISTEMA INICIADO COM SUCESSO]
+                    <div class="dpad-row">
+                      <button class="dpad-btn" id="dpadLeft" aria-label="Esquerda">
+                        <i class="fa-solid fa-caret-left"></i>
+                      </button>
+                      <button class="dpad-btn" id="dpadDown" aria-label="Baixo">
+                        <i class="fa-solid fa-caret-down"></i>
+                      </button>
+                      <button class="dpad-btn" id="dpadRight" aria-label="Direita">
+                        <i class="fa-solid fa-caret-right"></i>
+                      </button>
                     </div>
-                    <div class="t-line text">
-                      Bem-vindo ao CyberDeck CLI de Felipe Silva.
-                    </div>
-                    <div class="t-line text">
-                      Digite um comando ou clique nos atalhos abaixo:
-                    </div>
                   </div>
-
-                  <!-- Quick Command Shortcut Chips -->
-                  <div class="terminal-chips">
-                    <button class="t-chip" data-cmd="help">help</button>
-                    <button class="t-chip" data-cmd="whoami">whoami</button>
-                    <button class="t-chip" data-cmd="skills">skills</button>
-                    <button class="t-cmd-projects t-chip" data-cmd="projects">projects</button>
-                    <button class="t-chip" data-cmd="contact">contact</button>
-                    <button class="t-chip" data-cmd="matrix">matrix</button>
-                    <button class="t-chip" data-cmd="clear">clear</button>
-                  </div>
-
-                  <form class="terminal-input-row" id="terminalForm">
-                    <span class="terminal-sym">$</span>
-                    <input
-                      type="text"
-                      id="terminalInput"
-                      placeholder="digite aqui (ex: help, whoami)..."
-                      autocomplete="off"
-                      spellcheck="false"
-                    />
-                    <button type="submit" class="terminal-send">
-                      <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                  </form>
                 </div>
               </div>
             </section>
@@ -985,12 +1178,12 @@
             </button>
             <button
               class="dock-item"
-              data-screen="terminal"
-              title="Cyber Terminal"
-              onclick="goToScreen('terminal')"
+              data-screen="snake"
+              title="Modo Gamer"
+              onclick="goToScreen('snake')"
             >
-              <i class="fa-solid fa-terminal"></i>
-              <span class="dock-label">CLI</span>
+              <i class="fa-solid fa-gamepad"></i>
+              <span class="dock-label">Gamer</span>
             </button>
           </nav>
         </div>
@@ -1079,6 +1272,103 @@
           <button class="cyber-btn primary-glow w-full" id="btnCopyPageLink">
             <i class="fa-solid fa-link"></i> Copiar Link do Card
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Theme Selector -->
+    <div class="cyber-modal-backdrop" id="themeModal">
+      <div class="cyber-modal theme-modal">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fa-solid fa-palette"></i> Personalizar Tema
+          </div>
+          <button class="modal-close-btn" id="btnCloseTheme" aria-label="Fechar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="theme-category-title">
+            <i class="fa-solid fa-moon"></i> Temas Escuros (Cyber Neon)
+          </div>
+          <div class="theme-grid">
+            <button class="theme-option-card" data-theme-id="emerald">
+              <span class="theme-color-preview" style="background: #00ff87; box-shadow: 0 0 10px rgba(0,255,135,0.6);"></span>
+              <div class="theme-info">
+                <strong>Emerald Matrix</strong>
+                <span>Verde Cyber Hacker</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+
+            <button class="theme-option-card" data-theme-id="cyan">
+              <span class="theme-color-preview" style="background: #00f0ff; box-shadow: 0 0 10px rgba(0,240,255,0.6);"></span>
+              <div class="theme-info">
+                <strong>Cyber Cyan</strong>
+                <span>Azul Neon Futurista</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+
+            <button class="theme-option-card" data-theme-id="violet">
+              <span class="theme-color-preview" style="background: #c084fc; box-shadow: 0 0 10px rgba(192,132,252,0.6);"></span>
+              <div class="theme-info">
+                <strong>Neon Synthwave</strong>
+                <span>Roxo Violeta Retrô</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+
+            <button class="theme-option-card" data-theme-id="amber">
+              <span class="theme-color-preview" style="background: #fbbf24; box-shadow: 0 0 10px rgba(251,191,36,0.6);"></span>
+              <div class="theme-info">
+                <strong>Solar Gold</strong>
+                <span>Dourado Âmbar Solar</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+          </div>
+
+          <div class="theme-category-title" style="margin-top: 16px;">
+            <i class="fa-solid fa-sun"></i> Temas Claros (Minimal White)
+          </div>
+          <div class="theme-grid">
+            <button class="theme-option-card" data-theme-id="light-emerald">
+              <span class="theme-color-preview" style="background: #059669; border: 2px solid #cbd5e1;"></span>
+              <div class="theme-info">
+                <strong>Branco Esmeralda</strong>
+                <span>Branco Clean com Verde</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+
+            <button class="theme-option-card" data-theme-id="light-cyan">
+              <span class="theme-color-preview" style="background: #0284c7; border: 2px solid #cbd5e1;"></span>
+              <div class="theme-info">
+                <strong>Branco Azure</strong>
+                <span>Branco Gelo com Ciano</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+
+            <button class="theme-option-card" data-theme-id="light-violet">
+              <span class="theme-color-preview" style="background: #7c3aed; border: 2px solid #cbd5e1;"></span>
+              <div class="theme-info">
+                <strong>Branco Lavanda</strong>
+                <span>Branco com Violeta Real</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+
+            <button class="theme-option-card" data-theme-id="light-amber">
+              <span class="theme-color-preview" style="background: #d97706; border: 2px solid #cbd5e1;"></span>
+              <div class="theme-info">
+                <strong>Branco Sunset</strong>
+                <span>Branco Solar com Coral</span>
+              </div>
+              <i class="fa-solid fa-check theme-check-icon"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
