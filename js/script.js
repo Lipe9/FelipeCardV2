@@ -15,6 +15,17 @@
  * ============================================================================
  */
 
+// --- 0. ALTURA REAL DA TELA (corrige menu escondido em navegadores mobile) ---
+function setAppHeight() {
+  const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+  document.documentElement.style.setProperty('--app-height', `${Math.round(h)}px`);
+}
+setAppHeight();
+window.addEventListener('resize', setAppHeight);
+window.addEventListener('orientationchange', () => setTimeout(setAppHeight, 250));
+if (window.visualViewport) window.visualViewport.addEventListener('resize', setAppHeight);
+window.addEventListener('load', setAppHeight);
+
 // --- 1. AUDIO SYNTHESIS ENGINE (Web Audio API) ---
 class CyberAudioEngine {
   constructor() {

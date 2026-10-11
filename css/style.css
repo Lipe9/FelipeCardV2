@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    FELIPE SILVA // CYBERDECK PORTFOLIO v3.0
    Design System: High-Tech Glassmorphism, Cyber HUD, Holographic Sheen
    ========================================================================== */
@@ -333,6 +333,7 @@
 html, body {
   width: 100%;
   height: 100%;
+  height: var(--app-height, 100%);
   overflow: hidden;
   background-color: var(--bg-deep);
   color: var(--text-main);
@@ -348,6 +349,7 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: var(--app-height, 100vh);
   z-index: 0;
   pointer-events: none;
   opacity: 0.6;
@@ -391,6 +393,7 @@ html, body {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: var(--app-height, 100vh);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2227,8 +2230,8 @@ html, body {
   .card-wrapper {
     border-radius: 0;
     border: none;
-    height: 100dvh;
-    max-height: 100dvh;
+    height: var(--app-height, 100dvh);
+    max-height: var(--app-height, 100dvh);
   }
   .corner-bracket { display: none; }
   
@@ -2305,4 +2308,102 @@ html, body {
     font-size: 1.35rem;
     border-radius: 15px;
   }
+}
+
+/* ============================================================
+   RESPONSIVIDADE UNIVERSAL (altura dinâmica, safe-area, orientações)
+   ============================================================ */
+:root {
+  --app-height: 100vh;
+}
+@supports (height: 100dvh) {
+  :root { --app-height: 100dvh; }
+}
+
+/* Dock sempre visível: respeita a área segura (notch / barra de gestos) */
+.cyber-dock {
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.hud-top-bar {
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
+}
+.screen-scrollable {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Telas grandes (TV / monitores ultrawide) */
+@media (min-width: 1600px) and (min-height: 900px) {
+  .card-3d-wrapper { max-width: 540px; max-height: 920px; }
+}
+
+/* Tablets e desktops baixos: card nunca ultrapassa a janela */
+@media (min-width: 521px) {
+  .container { padding: 12px; }
+  .card-3d-wrapper { max-height: min(850px, calc(var(--app-height) - 24px)); }
+}
+
+/* Celulares comuns */
+@media (max-width: 520px) {
+  .card-wrapper { padding-bottom: 0; }
+  .cyber-dock {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    height: 54px;
+  }
+  .screen-scrollable {
+    padding: 14px 14px calc(84px + env(safe-area-inset-bottom, 0px));
+  }
+  #screen-snake .screen-scrollable {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+  .dock-label { font-size: 0.56rem; }
+}
+
+/* Celulares pequenos / altura reduzida */
+@media (max-width: 380px) {
+  .dock-item { height: 42px; }
+  .dock-label { font-size: 0.5rem; letter-spacing: 0; }
+  .dev-name { font-size: 1.1rem; }
+  .screen-heading h2 { font-size: 1.1rem; }
+  .snake-canvas-frame { width: 240px; height: 240px; }
+  #snakeCanvas { width: 100%; height: 100%; }
+}
+@media (max-height: 640px) and (max-width: 520px) {
+  .banner-box { height: 64px; }
+  .avatar-container { width: 60px; height: 60px; }
+  .cyber-dock { height: 48px; }
+  .dock-item { height: 40px; gap: 1px; }
+  .dock-item i { font-size: 0.85rem; }
+  .screen-scrollable { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Celular deitado (paisagem): card ocupa tudo e dock compacta */
+@media (max-height: 520px) and (orientation: landscape) {
+  .container { padding: 0; }
+  .card-3d-wrapper { max-width: 100%; max-height: 100%; }
+  .card-wrapper { border-radius: 0; border: none; }
+  .corner-bracket { display: none; }
+  .hud-top-bar { padding-top: calc(6px + env(safe-area-inset-top, 0px)); padding-bottom: 6px; }
+  .banner-box { height: 56px; }
+  .avatar-container { width: 56px; height: 56px; }
+  .avatar-row { margin-top: -24px; }
+  .skills-deck { grid-template-columns: 1fr 1fr; }
+  .cyber-dock {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(440px, calc(100% - 24px));
+    height: 44px;
+    bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+  .dock-item { height: 36px; flex-direction: row; gap: 4px; }
+  .dock-label { display: none; }
+  .screen-scrollable { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  .snake-canvas-frame { width: min(240px, 60vh); height: min(240px, 60vh); }
+}
+
+/* Tela cheia do joguinho: respeita altura real */
+.snake-game-container.fullscreen-mode {
+  height: var(--app-height);
+  overflow-y: auto;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
 }
